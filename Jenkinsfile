@@ -1,20 +1,11 @@
-pipeline {
-    agent {
-        docker {
-            image 'node:lts-alpine' 
-            args '-p 3000:3000' 
+node {
+    docker.image('node:lts-alpine').inside('-p 3000:3000') {
+        stage('Build') {
+            sh 'npm install'
         }
-    }
-    stages {
-        stage('Build') { 
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Test') { 
-            steps {
-                sh './jenkins/scripts/test.sh' 
-            }
+
+        stage('Test') {
+            sh './jenkins/scripts/test.sh'
         }
     }
 }
