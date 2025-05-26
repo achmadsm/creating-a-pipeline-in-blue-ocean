@@ -8,6 +8,11 @@ node {
             sh './jenkins/scripts/test.sh'
         }
 
+        stage('Manual Approval') {
+            // Ask user to approve before continuing to Deploy stage
+            input message: 'Continue to Deploy stage?', ok: 'Proceed'
+        }
+
         stage('Deploy') {
             sh './jenkins/scripts/deliver.sh'
 
