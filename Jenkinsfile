@@ -10,7 +10,11 @@ node {
 
         stage('Deploy') {
             sh './jenkins/scripts/deliver.sh'
-            input message: 'Finished using the web site? (Click "Proceed" to continue)'
+
+            // Pause execution for 1 minute to keep the app running before shutdown
+            echo 'App is deployed. Waiting for 1 minute before shutdown...'
+            sleep time: 1, unit: 'MINUTES'
+
             sh './jenkins/scripts/kill.sh'
         }
     }
